@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using UnityEngine;
+
+public class BasketController : MonoBehaviour
+{
+    public AudioClip appleSE, bombSE;
+    AudioSource audio;
+    
+    private void Start()
+    {
+        audio = GetComponent<AudioSource>();
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;//RaycastHit메소드(구조체) = Ray를 쏘는
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {//결과는 hit에 담기고 무한대로 Infinity
+                float x = Mathf.RoundToInt(hit.point.x);//hit.point.x = 충돌지점
+                float z = Mathf.RoundToInt(hit.point.z);//RoundToInt = 반올림해서 인트로
+                transform.position = new Vector3(x, 0, z);
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (other.CompareTag("apple"))//tag == "name"
+        {
+            //Debug.Log("사과");
+            gm.GetApple();
+            audio.PlayOneShot(appleSE);//내가원하는 클립을 한번재생
+        }
+        else
+        {
+            //Debug.Log("폭탄");
+            gm.GetBomb();
+            audio.PlayOneShot(bombSE);//내가원하는 클립을 한번재생
+        }
+        Debug.Log("잡았다");
+        Destroy(other.gameObject);
+    }
+}
