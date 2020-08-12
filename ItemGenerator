@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ItemGenerator : MonoBehaviour
+{
+    public GameObject applePrefab, bombPrefab;
+    float span = 1f, delta;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        delta += Time.deltaTime;
+        if (delta > span)
+        {
+            //랜덤하게 떨어지는 데 사과: 폭탄 확률 8:2/ 좌표도 랜덤하게
+            delta = 0;
+
+            GameObject prefab;
+            if (Random.Range(0, 5) >= 1)
+            {
+                prefab = applePrefab;
+            }
+            else prefab = bombPrefab;
+
+            GameObject go = Instantiate(prefab);
+            //위치설정
+            int x = Random.Range(-1, 2);
+            int z = Random.Range(-1, 2);
+
+            go.transform.position = new Vector3(x, go.transform.position.y, z);
+
+        }
+    }
+}
