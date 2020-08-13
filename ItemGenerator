@@ -22,13 +22,16 @@ public class ItemGenerator : MonoBehaviour
         {
             return;
         }
+        //TimeMode가 true거나 PointMode가 true일때
         if (gm.is_timeMode || gm.is_pointMode)
         {
             delta += Time.deltaTime;
-            if (delta > span)
+            if (delta > span)//일정시간만큼 반복
             {
-                delta = 0;
+                delta = 0;//초기화
                 GameObject prefab;
+                
+                // 사과 8 : 2 폭탄 비율
                 if (Random.Range(0, 5) >= 1)
                 {
                     prefab = applePrefab;
@@ -37,6 +40,7 @@ public class ItemGenerator : MonoBehaviour
                 {
                     prefab = bombPrefab;
                 }
+                //
                 GameObject go = Instantiate(prefab);
                 int x = Random.Range(-1, 2);
                 int z = Random.Range(-1, 2);
