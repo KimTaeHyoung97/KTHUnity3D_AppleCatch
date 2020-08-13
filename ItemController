@@ -4,15 +4,64 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    public float dropSpeed = -0.03f;
-    // Start is called before the first frame update
+    public float dropSpeed = -.03f;
+    GameManager gm;
 
+    public void Levelspeed(float lsx)
+    {
+        dropSpeed = dropSpeed * lsx;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if(gm.is_timeMode)
+        {
+            //40초부터 30초까지 속도 1.3배
+            if (gm.time <= 40)
+            {
+                Levelspeed(1.03f);
+            }
+            //30초부터 20초까지 속도 1.5배
+            else if (gm.time <= 30)
+            {
+                Levelspeed(1.05f);
+            }
+            //20초부터 0초까지 속도 1.2배
+            else if (gm.time <= 20)
+            {
+                Levelspeed(1.02f);
+            }
+        }
+        else if(gm.is_pointMode)
+        {
+
+            //1000이상 1.3배
+            if (gm.point >= 1000)
+            {
+                Levelspeed(1.03f);
+            }
+            //2000이상 1.5배
+            if (gm.point >= 2000)
+            {
+                Levelspeed(1.05f);
+            }
+            //3000이상 1.2배
+            if (gm.point >= 3000)
+            {
+                Levelspeed(1.02f);
+            }
+        }
+
         transform.Translate(0, dropSpeed, 0);
-        if (transform.position.y < -1f)
+        if (transform.position.y <= -1f)
+        {
             Destroy(gameObject);
+        }
     }
 }
