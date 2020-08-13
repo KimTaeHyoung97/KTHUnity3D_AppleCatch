@@ -40,10 +40,10 @@ public class ItemGenerator : MonoBehaviour
                 {
                     prefab = bombPrefab;
                 }
-                //
+                //생성
                 GameObject go = Instantiate(prefab);
-                int x = Random.Range(-1, 2);
-                int z = Random.Range(-1, 2);
+                int x = Random.Range(-1, 2);//x축 랜덤
+                int z = Random.Range(-1, 2);//z축 랜덤
                 go.transform.position = new Vector3(x, go.transform.position.y, z);
             }
         }
