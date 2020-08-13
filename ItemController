@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    public float dropSpeed = -.03f;
+    public float dropSpeed = -.03f;//떨어지는 속도
     GameManager gm;
-
+    
+    //난이도 속도 메소드
     public void Levelspeed(float lsx)
     {
         dropSpeed = dropSpeed * lsx;
@@ -19,7 +20,7 @@ public class ItemController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   //TimeMode가 true일때
         if(gm.is_timeMode)
         {
             //40초부터 30초까지 속도 1.3배
@@ -38,6 +39,7 @@ public class ItemController : MonoBehaviour
                 Levelspeed(1.02f);
             }
         }
+        //PointMode가 true일때
         else if(gm.is_pointMode)
         {
 
@@ -59,8 +61,9 @@ public class ItemController : MonoBehaviour
         }
 
         transform.Translate(0, dropSpeed, 0);
+        //Item y축크기가 -1보다 작거나 같다면
         if (transform.position.y <= -1f)
-        {
+        {//즉시 삭제
             Destroy(gameObject);
         }
     }
